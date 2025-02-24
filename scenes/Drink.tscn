@@ -1,0 +1,18 @@
+[gd_scene load_steps=6 format=3 uid="uid://ikgpc3g3yg0"]
+
+[ext_resource type="Script" path="res://src/Drink.gd" id="1_5ao7y"]
+[ext_resource type="Texture2D" uid="uid://dh3q87uuiybaa" path="res://img/drinks/01.png" id="1_pf67p"]
+[ext_resource type="Texture2D" uid="uid://cs2qivyuiibfu" path="res://img/drinks/02.png" id="3_oegcy"]
+[ext_resource type="Texture2D" uid="uid://c7se2umicjlqd" path="res://img/drinks/03.png" id="4_lnr4n"]
+[ext_resource type="Texture2D" uid="uid://dg5ucdlxokrvi" path="res://img/drinks/04.png" id="5_kst18"]
+
+[node name="Drink" type="Node2D" node_paths=PackedStringArray("view")]
+script = ExtResource("1_5ao7y")
+view = NodePath("View")
+drink_textures = Array[Texture2D]([ExtResource("1_pf67p"), ExtResource("3_oegcy"), ExtResource("4_lnr4n"), ExtResource("5_kst18")])
+
+[node name="View" type="TextureRect" parent="."]
+offset_right = 2.0
+offset_bottom = 2.0
+texture = ExtResource("1_pf67p")
+stretch_mode = 1

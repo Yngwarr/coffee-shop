@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://jlgojgh2ohb1"]
+
+[ext_resource type="Texture2D" uid="uid://dr6fc6wedl7et" path="res://img/machine.png" id="1_wywwr"]
+[ext_resource type="Script" path="res://src/Machine.gd" id="2_t1c1r"]
+[ext_resource type="PackedScene" uid="uid://ikgpc3g3yg0" path="res://scenes/Drink.tscn" id="2_urojc"]
+
+[node name="Machine" type="Sprite2D" node_paths=PackedStringArray("drink", "fill_point")]
+texture = ExtResource("1_wywwr")
+centered = false
+script = ExtResource("2_t1c1r")
+drink = NodePath("Drink")
+fill_point = NodePath("FillPoint")
+
+[node name="Drink" parent="." instance=ExtResource("2_urojc")]
+position = Vector2(1, 1)
+width = 5
+height = 9
+
+[node name="FillPoint" type="Marker2D" parent="."]
+position = Vector2(0, 26)

@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://ci2bn7mtm836t"]
+
+[ext_resource type="Script" path="res://src/Glass.gd" id="1_336vg"]
+[ext_resource type="PackedScene" uid="uid://ikgpc3g3yg0" path="res://scenes/Drink.tscn" id="1_ce4pg"]
+[ext_resource type="Texture2D" uid="uid://dmgudqqftx1x2" path="res://img/glass.png" id="1_ym7by"]
+
+[node name="Glass" type="Node2D" node_paths=PackedStringArray("drinks", "view")]
+script = ExtResource("1_336vg")
+drinks = [NodePath("Drink3"), NodePath("Drink2"), NodePath("Drink")]
+view = NodePath("View")
+
+[node name="Drink" parent="." instance=ExtResource("1_ce4pg")]
+position = Vector2(1, 1)
+width = 5
+height = 4
+
+[node name="Drink2" parent="." instance=ExtResource("1_ce4pg")]
+position = Vector2(1, 5)
+drink_type = 1
+width = 5
+height = 4
+
+[node name="Drink3" parent="." instance=ExtResource("1_ce4pg")]
+position = Vector2(1, 9)
+drink_type = 2
+width = 4
+height = 3
+
+[node name="View" type="Sprite2D" parent="."]
+texture = ExtResource("1_ym7by")
+centered = false
