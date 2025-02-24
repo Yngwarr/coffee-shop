@@ -30,3 +30,16 @@ func editor_update() -> void:
 func put_under(glass: Glass) -> void:
 	glass.global_position = Vector2(fill_point_position.x, fill_point_position.y - glass.get_height())
 	glass_under = glass
+
+func empty() -> void:
+	glass_under = null
+
+func is_empty() -> bool:
+	return glass_under == null
+
+func fill() -> void:
+	if glass_under == null:
+		# TODO visualize the miss
+		return
+
+	glass_under.add(drink_type)
