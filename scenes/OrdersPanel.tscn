@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://ddvwo73klrssa"]
+
+[ext_resource type="Script" path="res://src/OrdersPanel.gd" id="1_0buxs"]
+[ext_resource type="Texture2D" uid="uid://o82u4jdpy6o2" path="res://img/panel.png" id="1_8t7vp"]
+[ext_resource type="PackedScene" uid="uid://ci2bn7mtm836t" path="res://scenes/Glass.tscn" id="2_73iow"]
+
+[node name="OrdersPanel" type="Node2D" node_paths=PackedStringArray("glass_container", "glass_positions")]
+script = ExtResource("1_0buxs")
+glass_prefab = ExtResource("2_73iow")
+glass_container = NodePath("GlassContainer")
+glass_positions = [NodePath("Position1"), NodePath("Position2"), NodePath("Position3")]
+
+[node name="Panel" type="Sprite2D" parent="."]
+texture = ExtResource("1_8t7vp")
+centered = false
+
+[node name="GlassContainer" type="Node2D" parent="."]
+
+[node name="Position1" type="Marker2D" parent="."]
+position = Vector2(2, 15)
+
+[node name="Position2" type="Marker2D" parent="."]
+position = Vector2(2, 30)
+
+[node name="Position3" type="Marker2D" parent="."]
+position = Vector2(2, 45)

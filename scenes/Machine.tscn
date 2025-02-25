@@ -14,7 +14,7 @@ fill_point = NodePath("FillPoint")
 [node name="Drink" parent="." instance=ExtResource("2_urojc")]
 position = Vector2(1, 1)
 width = 5
-height = 9
+height = 7
 
 [node name="FillPoint" type="Marker2D" parent="."]
-position = Vector2(0, 26)
+position = Vector2(-1, 25)

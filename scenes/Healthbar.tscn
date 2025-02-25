@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://bpgbs001xd6x7"]
+
+[ext_resource type="PackedScene" uid="uid://b166qlyym7kov" path="res://scenes/Heart.tscn" id="1_4ubok"]
+[ext_resource type="Script" path="res://src/Healthbar.gd" id="1_uclw3"]
+
+[node name="Healthbar" type="Node2D"]
+script = ExtResource("1_uclw3")
+heart_prefab = ExtResource("1_4ubok")

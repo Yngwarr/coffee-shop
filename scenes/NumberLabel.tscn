@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7mkokulq1oe0"]
+
+[ext_resource type="Script" path="res://src/NumberLabel.gd" id="1_dsn4d"]
+[ext_resource type="Texture2D" uid="uid://bqoj107ig1tm8" path="res://img/numbers.png" id="1_i1eec"]
+
+[node name="NumberLabel" type="Node2D" node_paths=PackedStringArray("view")]
+script = ExtResource("1_dsn4d")
+number = 1
+view = NodePath("View")
+
+[node name="View" type="Sprite2D" parent="."]
+texture = ExtResource("1_i1eec")
+centered = false
+hframes = 4

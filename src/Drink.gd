@@ -33,6 +33,9 @@ func set_type(value: int) -> void:
 
     view.texture = drink_textures[drink_type]
 
+func randomize_type() -> void:
+    set_type(randi() % len(drink_textures))
+
 func resize_view() -> void:
     if view == null or width < 1 or height < 1:
         return

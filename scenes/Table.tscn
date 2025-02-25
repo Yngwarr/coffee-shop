@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://dxkox7w8u2axu"]
+
+[ext_resource type="Texture2D" uid="uid://qxt2q22xv60a" path="res://img/table.png" id="1_7nn3o"]
+[ext_resource type="Shader" path="res://shaders/scrolling.gdshader" id="2_6f1hg"]
+[ext_resource type="Texture2D" uid="uid://d1j2ttxxclhp6" path="res://img/conveyor.png" id="2_eehjp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nkp76"]
+shader = ExtResource("2_6f1hg")
+shader_parameter/offset = Vector2(0, 0)
+
+[node name="Table" type="Sprite2D"]
+texture = ExtResource("1_7nn3o")
+centered = false
+
+[node name="Conveyor" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_nkp76")
+offset_top = 36.0
+offset_right = 52.0
+offset_bottom = 37.0
+texture = ExtResource("2_eehjp")
+stretch_mode = 1

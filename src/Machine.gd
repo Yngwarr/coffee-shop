@@ -28,7 +28,7 @@ func editor_update() -> void:
 	drink.set_type(drink_type)
 
 func put_under(glass: Glass) -> void:
-	glass.global_position = Vector2(fill_point_position.x, fill_point_position.y - glass.get_height())
+	glass.global_position = Vector2(fill_point_position.x, fill_point_position.y)
 	glass_under = glass
 
 func empty() -> void:
