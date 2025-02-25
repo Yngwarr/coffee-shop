@@ -17,6 +17,7 @@ enum Direction { Left = -1, Right = 1 }
 @export var glasses_container: Node2D
 @export var score_label: Label
 @export var orders_panel: OrdersPanel
+@export var bin_point: Marker2D
 
 var machines: Array[Machine]
 var glasses: Array[Glass]
@@ -73,19 +74,28 @@ func move_glasses(direction: Direction) -> void:
 			var idx := orders_panel.get_glass_number(glass)
 			if idx < 0:
 				# TODO lose a life
-				print("nope")
-				glass.queue_free()
+				var dest := bin_point.global_position
+				var t := get_tree().create_tween()
+				t.tween_property(glass, "global_position:x", glass.global_position.x + 12, .2)
+				t.tween_property(glass, "global_position:y", dest.y, .3)\
+					.set_ease(Tween.EASE_IN)\
+					.set_trans(Tween.TRANS_QUINT)
+				t.parallel().tween_property(glass, "global_position:x", dest.x, .3)\
+					.set_ease(Tween.EASE_IN)\
+					.set_trans(Tween.TRANS_SINE)
+				t.parallel().tween_property(glass, "rotation_degrees", 180, .3)\
+					.set_ease(Tween.EASE_IN)\
+					.set_trans(Tween.TRANS_SINE)
+				t.tween_callback(glass.queue_free)
 			else:
 				var dest := orders_panel.get_glass_position(idx)
 				var t := get_tree().create_tween()
 				t.tween_property(glass, "global_position", dest, .5)\
 					.set_ease(Tween.EASE_IN)\
-					.set_trans(Tween.TRANS_CUBIC)
+					.set_trans(Tween.TRANS_SINE)
 				t.tween_callback(orders_panel.reroll_glass.bind(idx))
 				t.tween_callback(glass.queue_free)
 
-				# TODO send glass that way
-				# orders_panel.reroll_glass(idx)
 				# TODO combos (consecutive serves)
 				add_score(5)
 		else:
