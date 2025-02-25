@@ -15,9 +15,11 @@ enum Direction { Left = -1, Right = 1 }
 @export_group("Internal")
 @export var machines_container: Node2D
 @export var glasses_container: Node2D
+@export var score_label: Label
 
 var machines: Array[Machine]
 var glasses: Array[Glass]
+var score: int = 0
 
 func _ready() -> void:
 	# pause_menu.modal_open.connect(pause_ctl.drop_next)
@@ -30,6 +32,8 @@ func _ready() -> void:
 		machines.push_back(c)
 
 	spawn_glass()
+
+	score_label.text = '%d' % score
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("game_fill_0"):
