@@ -29,3 +29,14 @@ func randomize() -> void:
     for d in drinks:
         d.randomize_type()
         d.show()
+
+func eq(other: Glass) -> bool:
+    var result := true
+
+    if len(other.drinks) != len(drinks):
+        return false
+
+    for i in range(len(drinks)):
+        result = result and other.drinks[i].eq(drinks[i])
+
+    return result

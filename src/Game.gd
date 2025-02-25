@@ -16,6 +16,7 @@ enum Direction { Left = -1, Right = 1 }
 @export var machines_container: Node2D
 @export var glasses_container: Node2D
 @export var score_label: Label
+@export var orders_panel: OrdersPanel
 
 var machines: Array[Machine]
 var glasses: Array[Glass]
@@ -68,8 +69,15 @@ func move_glasses(direction: Direction) -> void:
 		if glass.conv_pos < 0:
 			glass.hide()
 		elif glass.conv_pos >= len(machines):
-			# TODO score the drink
 			glasses.pop_back()
+			var idx := orders_panel.get_glass_number(glass)
+			if idx < 0:
+				# TODO lose a life
+				print("nope")
+			else:
+				# TODO send glass that way
+				orders_panel.reroll_glass(idx)
+				add_score(5)
 			glass.queue_free()
 		else:
 			glass.show()
@@ -93,3 +101,7 @@ func spawn_glass() -> void:
 	glasses.push_front(new_glass)
 	put_under(0, new_glass)
 	glasses_container.add_child(new_glass)
+
+func add_score(amount: int) -> void:
+	score += amount
+	score_label.text = "%d" % score

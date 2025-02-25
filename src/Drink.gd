@@ -44,3 +44,6 @@ func resize_view() -> void:
 
 func update_texture() -> void:
     set_type(drink_type)
+
+func eq(other: Drink) -> bool:
+    return other.visible == visible and other.drink_type == drink_type

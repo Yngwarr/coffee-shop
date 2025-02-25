@@ -10,6 +10,21 @@ extends Node2D
 func _ready() -> void:
     populate_orders()
 
+func get_glass_number(glass: Glass) -> int:
+    var result: int = -1
+
+    for i in range(glass_container.get_child_count()):
+        if glass_container.get_child(i).eq(glass):
+            return i
+
+    return result
+
+func get_glass_position(idx: int) -> Vector2:
+    return glass_container.get_child(idx).global_position
+
+func reroll_glass(idx: int) -> void:
+    glass_container.get_child(idx).randomize()
+
 func populate_orders() -> void:
     if glass_prefab == null:
         printerr("Glass prefab must not be null")
@@ -28,5 +43,5 @@ func populate_orders() -> void:
     for i in range(count, len(glass_positions)):
         var new_glass: Glass = glass_prefab.instantiate()
         new_glass.position = glass_positions[i].position
-        add_child(new_glass)
+        glass_container.add_child(new_glass)
         new_glass.randomize()

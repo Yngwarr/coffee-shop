@@ -10,9 +10,9 @@ drinks = [NodePath("Drink3"), NodePath("Drink2"), NodePath("Drink")]
 view = NodePath("View")
 
 [node name="Drink" parent="." instance=ExtResource("1_ce4pg")]
-position = Vector2(1, -12)
+position = Vector2(1, -13)
 width = 7
-height = 3
+height = 4
 
 [node name="Drink2" parent="." instance=ExtResource("1_ce4pg")]
 position = Vector2(1, -9)
