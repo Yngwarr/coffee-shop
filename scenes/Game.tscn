@@ -177,6 +177,9 @@ process_mode = 3
 script = ExtResource("8_cpxey")
 pause_screen = NodePath("../PauseMenu")
 
+[node name="OrdersPanel" parent="." instance=ExtResource("14_s81w8")]
+position = Vector2(71, 0)
+
 [node name="Table" parent="." instance=ExtResource("10_v2xrc")]
 
 [node name="Machines" type="Node2D" parent="."]
@@ -218,9 +221,6 @@ number = 4
 
 [node name="Healthbar" parent="." instance=ExtResource("13_lwvai")]
 position = Vector2(33, 42)
-
-[node name="OrdersPanel" parent="." instance=ExtResource("14_s81w8")]
-position = Vector2(71, 0)
 
 [node name="Score" type="Label" parent="."]
 offset_top = 42.0

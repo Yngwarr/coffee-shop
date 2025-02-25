@@ -74,11 +74,20 @@ func move_glasses(direction: Direction) -> void:
 			if idx < 0:
 				# TODO lose a life
 				print("nope")
+				glass.queue_free()
 			else:
+				var dest := orders_panel.get_glass_position(idx)
+				var t := get_tree().create_tween()
+				t.tween_property(glass, "global_position", dest, .5)\
+					.set_ease(Tween.EASE_IN)\
+					.set_trans(Tween.TRANS_CUBIC)
+				t.tween_callback(orders_panel.reroll_glass.bind(idx))
+				t.tween_callback(glass.queue_free)
+
 				# TODO send glass that way
-				orders_panel.reroll_glass(idx)
+				# orders_panel.reroll_glass(idx)
+				# TODO combos (consecutive serves)
 				add_score(5)
-			glass.queue_free()
 		else:
 			glass.show()
 			put_under(glass.conv_pos, glass)
