@@ -1,12 +1,18 @@
-## TODO
+# TODO
 
-### Main menu
+## Clarity
 
-* Options menu:
-    * Key mappings.
-    * Restore defaults.
+- Move glasses with tweens on press.
+- Move the conveyor.
+- Add particles when order is fulfilled.
+- Response for number presses.
+- Add animation for machines on number presses.
+- Add a stream for machines.
 
-### Game over screen
+## Gameplay
 
-* Try again.
-* Quit to main menu (no confirmation).
+- Remove hearts on fail.
+
+## Polish
+
+- Replace pause menu with something more appropriate (or remove it).
