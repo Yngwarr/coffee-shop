@@ -1,10 +1,12 @@
+class_name Game
 extends Node2D
 
 ## The game node, the beginning of all, the almighty entry point, the place,
 ## where your dreams come true! Adjust to your likings and may the code be with
 ## you.
 
-const TransitionTime := .5
+const MoveTime := .5
+const PourTime := .1
 
 enum Direction { Left = -1, Right = 1 }
 
@@ -28,11 +30,13 @@ var glasses: Array[Glass]
 var score: int = 0
 var is_on_cooldown := false
 
+@onready var action_queue := ActionQueue.new()
+
 func _ready() -> void:
 	# pause_menu.modal_open.connect(pause_ctl.drop_next)
 	# pause_menu.resume_pressed.connect(pause_ctl.unpause)
 	cooldown.timeout.connect(end_cooldown)
-	cooldown.wait_time = TransitionTime
+	cooldown.wait_time = MoveTime
 
 	for c in machines_container.get_children():
 		if c is not Machine:
@@ -45,22 +49,36 @@ func _ready() -> void:
 	score_label.text = '%d' % score
 
 func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("game_fill_0"):
+		action_queue.fill_glass(0)
+	if Input.is_action_just_pressed("game_fill_1"):
+		action_queue.fill_glass(1)
+	if Input.is_action_just_pressed("game_fill_2"):
+		action_queue.fill_glass(2)
+	if Input.is_action_just_pressed("game_fill_3"):
+		action_queue.fill_glass(3)
+	if Input.is_action_just_pressed("game_move_left"):
+		action_queue.move_glasses(Direction.Left)
+	if Input.is_action_just_pressed("game_move_right"):
+		action_queue.move_glasses(Direction.Right)
+
 	if is_on_cooldown:
 		return
 
-	if Input.is_action_just_pressed("game_fill_0"):
-		fill_glass(0)
-	if Input.is_action_just_pressed("game_fill_1"):
-		fill_glass(1)
-	if Input.is_action_just_pressed("game_fill_2"):
-		fill_glass(2)
-	if Input.is_action_just_pressed("game_fill_3"):
-		fill_glass(3)
-	if Input.is_action_just_pressed("game_move_left"):
-		if can_move_left():
-			move_glasses(Direction.Left)
-	if Input.is_action_just_pressed("game_move_right"):
-		move_glasses(Direction.Right)
+	perform_action(action_queue.pop_action())
+
+func perform_action(action: Variant) -> void:
+	if action == null:
+		return
+
+	match action.type:
+		ActionQueue.Type.FillGlass:
+			fill_glass(action.index)
+			start_cooldown(PourTime)
+		ActionQueue.Type.MoveGlasses:
+			var success := move_glasses(action.direction)
+			if success:
+				start_cooldown(MoveTime)
 
 func can_move_left() -> bool:
 	var cannot := not machines[0].is_empty()
@@ -70,8 +88,9 @@ func can_move_left() -> bool:
 
 	return not cannot
 
-func move_glasses(direction: Direction) -> void:
-	start_cooldown()
+func move_glasses(direction: Direction) -> bool:
+	if direction == Direction.Left and not can_move_left():
+		return false
 
 	for m in machines:
 		m.empty()
@@ -83,7 +102,7 @@ func move_glasses(direction: Direction) -> void:
 			# hide the extra glass
 			var dest := glass_spawn_point.global_position
 			var t := get_tree().create_tween()
-			t.tween_property(glass, "global_position", dest, TransitionTime)
+			t.tween_property(glass, "global_position", dest, MoveTime)
 			t.tween_callback(glass.hide)
 		elif glass.conv_pos >= len(machines):
 			glasses.pop_back()
@@ -106,7 +125,7 @@ func move_glasses(direction: Direction) -> void:
 			else:
 				var dest := orders_panel.get_glass_position(idx)
 				var t := get_tree().create_tween()
-				t.tween_property(glass, "global_position", dest, TransitionTime)\
+				t.tween_property(glass, "global_position", dest, MoveTime)\
 					.set_ease(Tween.EASE_IN)\
 					.set_trans(Tween.TRANS_SINE)
 				t.tween_callback(orders_panel.reroll_glass.bind(idx))
@@ -120,6 +139,8 @@ func move_glasses(direction: Direction) -> void:
 
 	if direction == Direction.Right and glasses[0].conv_pos > 0:
 		spawn_glass()
+
+	return true
 
 func put_under(machine_index: int, glass: Glass) -> void:
 	machines[machine_index].put_under(glass)
@@ -142,9 +163,9 @@ func add_score(amount: int) -> void:
 	score += amount
 	score_label.text = "%d" % score
 
-func start_cooldown() -> void:
+func start_cooldown(time: float) -> void:
 	is_on_cooldown = true
-	cooldown.start()
+	cooldown.start(time)
 
 func end_cooldown() -> void:
 	is_on_cooldown = false
