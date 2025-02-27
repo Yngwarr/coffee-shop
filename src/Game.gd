@@ -4,6 +4,8 @@ extends Node2D
 ## where your dreams come true! Adjust to your likings and may the code be with
 ## you.
 
+const TransitionTime := .5
+
 enum Direction { Left = -1, Right = 1 }
 
 @export var pause_ctl: Pause
@@ -18,14 +20,19 @@ enum Direction { Left = -1, Right = 1 }
 @export var score_label: Label
 @export var orders_panel: OrdersPanel
 @export var bin_point: Marker2D
+@export var glass_spawn_point: Marker2D
+@export var cooldown: Timer
 
 var machines: Array[Machine]
 var glasses: Array[Glass]
 var score: int = 0
+var is_on_cooldown := false
 
 func _ready() -> void:
 	# pause_menu.modal_open.connect(pause_ctl.drop_next)
 	# pause_menu.resume_pressed.connect(pause_ctl.unpause)
+	cooldown.timeout.connect(end_cooldown)
+	cooldown.wait_time = TransitionTime
 
 	for c in machines_container.get_children():
 		if c is not Machine:
@@ -38,6 +45,9 @@ func _ready() -> void:
 	score_label.text = '%d' % score
 
 func _process(_delta: float) -> void:
+	if is_on_cooldown:
+		return
+
 	if Input.is_action_just_pressed("game_fill_0"):
 		fill_glass(0)
 	if Input.is_action_just_pressed("game_fill_1"):
@@ -61,6 +71,8 @@ func can_move_left() -> bool:
 	return not cannot
 
 func move_glasses(direction: Direction) -> void:
+	start_cooldown()
+
 	for m in machines:
 		m.empty()
 
@@ -68,7 +80,11 @@ func move_glasses(direction: Direction) -> void:
 		glass.conv_pos += direction
 
 		if glass.conv_pos < 0:
-			glass.hide()
+			# hide the extra glass
+			var dest := glass_spawn_point.global_position
+			var t := get_tree().create_tween()
+			t.tween_property(glass, "global_position", dest, TransitionTime)
+			t.tween_callback(glass.hide)
 		elif glass.conv_pos >= len(machines):
 			glasses.pop_back()
 			var idx := orders_panel.get_glass_number(glass)
@@ -90,7 +106,7 @@ func move_glasses(direction: Direction) -> void:
 			else:
 				var dest := orders_panel.get_glass_position(idx)
 				var t := get_tree().create_tween()
-				t.tween_property(glass, "global_position", dest, .5)\
+				t.tween_property(glass, "global_position", dest, TransitionTime)\
 					.set_ease(Tween.EASE_IN)\
 					.set_trans(Tween.TRANS_SINE)
 				t.tween_callback(orders_panel.reroll_glass.bind(idx))
@@ -116,6 +132,7 @@ func fill_glass(idx: int) -> void:
 
 func spawn_glass() -> void:
 	var new_glass: Glass = glass_prefab.instantiate()
+	new_glass.global_position = glass_spawn_point.global_position
 
 	glasses.push_front(new_glass)
 	put_under(0, new_glass)
@@ -124,3 +141,10 @@ func spawn_glass() -> void:
 func add_score(amount: int) -> void:
 	score += amount
 	score_label.text = "%d" % score
+
+func start_cooldown() -> void:
+	is_on_cooldown = true
+	cooldown.start()
+
+func end_cooldown() -> void:
+	is_on_cooldown = false
