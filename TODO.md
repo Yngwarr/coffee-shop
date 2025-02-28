@@ -2,7 +2,6 @@
 
 ## Clarity
 
-- Move the conveyor.
 - Add particles when order is fulfilled.
 - Response for number presses.
 - Add animation for machines on number presses.

@@ -24,6 +24,7 @@ enum Direction { Left = -1, Right = 1 }
 @export var bin_point: Marker2D
 @export var glass_spawn_point: Marker2D
 @export var cooldown: Timer
+@export var table: Table
 
 var machines: Array[Machine]
 var glasses: Array[Glass]
@@ -94,6 +95,8 @@ func move_glasses(direction: Direction) -> bool:
 
 	for m in machines:
 		m.empty()
+
+	table.conv_start(direction)
 
 	for glass in glasses:
 		glass.conv_pos += direction
@@ -169,3 +172,4 @@ func start_cooldown(time: float) -> void:
 
 func end_cooldown() -> void:
 	is_on_cooldown = false
+	table.conv_stop()
