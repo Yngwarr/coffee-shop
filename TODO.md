@@ -9,6 +9,7 @@
 
 ## Gameplay
 
+- Add more types of cups.
 - Remove hearts on fail.
 
 ## Polish
