@@ -2,10 +2,8 @@
 
 ## Friday
 
-- Replace hearts with capacity.
 - Response for number presses.
 - Add more types of cups.
-- Jumping hearts.
 
 - Add animation for machines on number presses.
 - Add a pouring stream for machines.

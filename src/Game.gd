@@ -20,6 +20,7 @@ enum Direction { Left = -1, Right = 1 }
 @export var machines_container: Node2D
 @export var glasses_container: Node2D
 @export var score_label: Label
+@export var capacity_label: Label
 @export var orders_panel: OrdersPanel
 @export var bin_point: Marker2D
 @export var glass_spawn_point: Marker2D
@@ -31,6 +32,7 @@ var machines: Array[Machine]
 var glasses: Array[Glass]
 var score: int = 0
 var is_on_cooldown := false
+var capacity := 100
 
 @onready var action_queue := ActionQueue.new()
 
@@ -81,6 +83,7 @@ func perform_action(action: Variant) -> void:
 		ActionQueue.Type.MoveGlasses:
 			var success := move_glasses(action.direction)
 			if success:
+				add_capacity(-1)
 				start_cooldown(MoveTime)
 
 func can_move_left() -> bool:
@@ -113,7 +116,7 @@ func move_glasses(direction: Direction) -> bool:
 			glasses.pop_back()
 			var idx := orders_panel.get_glass_number(glass)
 			if idx < 0:
-				healthbar.dec_health()
+				# healthbar.dec_health()
 				var dest := bin_point.global_position
 				var t := get_tree().create_tween()
 				t.tween_property(glass, "global_position:x", glass.global_position.x + 12, .2)
@@ -175,3 +178,7 @@ func start_cooldown(time: float) -> void:
 func end_cooldown() -> void:
 	is_on_cooldown = false
 	table.conv_stop()
+
+func add_capacity(value: int) -> void:
+	capacity += value
+	capacity_label.text = "%d" % capacity
