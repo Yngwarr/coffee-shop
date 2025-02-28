@@ -2,16 +2,16 @@
 
 ## Friday
 
+- Glass filling animation.
 - Response for number presses.
+- Add more types of cups.
+- Jumping hearts.
+
 - Add animation for machines on number presses.
 - Add a pouring stream for machines.
-- Glass filling animation.
-- Add more types of cups.
 
 ## Saturday
 
-- Remove hearts on fail.
-- Jumping hearts.
 - Game over sequence.
 - Game over screen.
 - Main menu.
