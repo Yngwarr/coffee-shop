@@ -2,7 +2,7 @@
 
 ## Friday
 
-- Glass filling animation.
+- Replace hearts with capacity.
 - Response for number presses.
 - Add more types of cups.
 - Jumping hearts.

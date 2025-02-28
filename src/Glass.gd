@@ -13,13 +13,13 @@ func _ready() -> void:
         for drink in drinks:
             drink.hide()
 
-func add(drink_type: int) -> void:
+func add(drink_type: int, time: float) -> void:
     for drink in drinks:
         if drink.visible:
             continue
 
         drink.set_type(drink_type)
-        drink.show()
+        drink.pour(time)
         break
 
 func get_height() -> float:

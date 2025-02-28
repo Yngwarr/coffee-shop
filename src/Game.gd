@@ -154,7 +154,7 @@ func fill_glass(idx: int) -> void:
 	if idx < 0 or idx >= len(machines):
 		printerr("Glass index must be in range of len(machines)")
 
-	machines[idx].fill()
+	machines[idx].fill(PourTime)
 
 func spawn_glass() -> void:
 	var new_glass: Glass = glass_prefab.instantiate()

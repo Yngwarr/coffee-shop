@@ -47,3 +47,16 @@ func update_texture() -> void:
 
 func eq(other: Drink) -> bool:
     return other.visible == visible and other.drink_type == drink_type
+
+func pour(time: float) -> void:
+    show()
+
+    var dest := position.y
+    position.y += height
+    scale.y = 0
+
+    var t := get_tree().create_tween()\
+        .set_ease(Tween.EASE_OUT)\
+        .set_trans(Tween.TRANS_QUAD)
+    t.tween_property(self, "scale:y", 1, time)
+    t.parallel().tween_property(self, "position:y", dest, time)

@@ -39,9 +39,9 @@ func empty() -> void:
 func is_empty() -> bool:
 	return glass_under == null
 
-func fill() -> void:
+func fill(time: float) -> void:
 	if glass_under == null:
 		# TODO visualize the miss
 		return
 
-	glass_under.add(drink_type)
+	glass_under.add(drink_type, time)
