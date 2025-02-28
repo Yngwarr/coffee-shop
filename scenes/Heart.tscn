@@ -3,10 +3,18 @@
 [ext_resource type="Script" path="res://src/Heart.gd" id="1_dpksc"]
 [ext_resource type="Texture2D" uid="uid://blvymisqkncbl" path="res://img/heart.png" id="1_qxoko"]
 
-[node name="Heart" type="Node2D" node_paths=PackedStringArray("view")]
+[node name="Heart" type="Node2D" node_paths=PackedStringArray("parts")]
 script = ExtResource("1_dpksc")
-view = NodePath("Heart")
+parts = [NodePath("Heart"), NodePath("Heart2")]
 
 [node name="Heart" type="Sprite2D" parent="."]
 texture = ExtResource("1_qxoko")
 centered = false
+hframes = 2
+
+[node name="Heart2" type="Sprite2D" parent="."]
+position = Vector2(2.5, 0)
+texture = ExtResource("1_qxoko")
+centered = false
+hframes = 2
+frame = 1

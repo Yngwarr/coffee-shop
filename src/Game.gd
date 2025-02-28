@@ -25,6 +25,7 @@ enum Direction { Left = -1, Right = 1 }
 @export var glass_spawn_point: Marker2D
 @export var cooldown: Timer
 @export var table: Table
+@export var healthbar: Healthbar
 
 var machines: Array[Machine]
 var glasses: Array[Glass]
@@ -36,6 +37,7 @@ var is_on_cooldown := false
 func _ready() -> void:
 	# pause_menu.modal_open.connect(pause_ctl.drop_next)
 	# pause_menu.resume_pressed.connect(pause_ctl.unpause)
+	RenderingServer.set_default_clear_color(Color("#c7f0d8"))
 	cooldown.timeout.connect(end_cooldown)
 	cooldown.wait_time = MoveTime
 
@@ -111,7 +113,7 @@ func move_glasses(direction: Direction) -> bool:
 			glasses.pop_back()
 			var idx := orders_panel.get_glass_number(glass)
 			if idx < 0:
-				# TODO lose a life
+				healthbar.dec_health()
 				var dest := bin_point.global_position
 				var t := get_tree().create_tween()
 				t.tween_property(glass, "global_position:x", glass.global_position.x + 12, .2)
