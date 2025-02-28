@@ -2,7 +2,6 @@
 
 ## Clarity
 
-- Move glasses with tweens on press.
 - Move the conveyor.
 - Add particles when order is fulfilled.
 - Response for number presses.
