@@ -9,3 +9,4 @@ extends Node2D
 func _ready() -> void:
 	ConfigCtl.load_config()
 	first_to_focus.grab_focus()
+	RenderingServer.set_default_clear_color(Color("#c7f0d8"))

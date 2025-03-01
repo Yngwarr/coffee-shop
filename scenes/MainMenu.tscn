@@ -3,11 +3,9 @@
 [ext_resource type="Script" path="res://src/UI/MainMenu.gd" id="1_62wd7"]
 [ext_resource type="Script" path="res://src/UI/ChangeSceneButton.gd" id="2_5fb6k"]
 [ext_resource type="PackedScene" uid="uid://dp02anwflcyv8" path="res://scenes/OptionsWindow.tscn" id="2_eahdg"]
+[ext_resource type="LabelSettings" uid="uid://cueid5fr54qys" path="res://resources/label_dark.tres" id="2_wtqth"]
 [ext_resource type="Script" path="res://src/UI/ShowPopupButton.gd" id="3_pto1d"]
 [ext_resource type="Script" path="res://src/UI/QuitButton.gd" id="4_kgmp6"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_8bkd4"]
-font_size = 52
 
 [node name="MainMenu" type="Node2D" node_paths=PackedStringArray("first_to_focus")]
 script = ExtResource("1_62wd7")
@@ -24,37 +22,39 @@ grow_vertical = 2
 
 [node name="TitleMargin" type="MarginContainer" parent="Menu/Container"]
 layout_mode = 2
-theme_override_constants/margin_top = 100
+theme_override_constants/margin_top = 2
 
 [node name="Title" type="Label" parent="Menu/Container/TitleMargin"]
 layout_mode = 2
-text = "Epic Megagame"
-label_settings = SubResource("LabelSettings_8bkd4")
+text = "COFFEE MACHINE"
+label_settings = ExtResource("2_wtqth")
 horizontal_alignment = 1
 
 [node name="MenuMargin" type="MarginContainer" parent="Menu/Container"]
 layout_mode = 2
 size_flags_vertical = 10
-theme_override_constants/margin_left = 200
-theme_override_constants/margin_right = 200
-theme_override_constants/margin_bottom = 100
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
 
 [node name="Menu" type="VBoxContainer" parent="Menu/Container/MenuMargin"]
 layout_mode = 2
 
 [node name="Start" type="Button" parent="Menu/Container/MenuMargin/Menu"]
 layout_mode = 2
-text = "Start"
+text = "START"
 script = ExtResource("2_5fb6k")
 next_scene_name = "res://scenes/Game.tscn"
 
 [node name="Options" type="Button" parent="Menu/Container/MenuMargin/Menu" node_paths=PackedStringArray("popup")]
+visible = false
 layout_mode = 2
 text = "Options"
 script = ExtResource("3_pto1d")
 popup = NodePath("../../../../../OptionsWindow")
 
 [node name="Credits" type="Button" parent="Menu/Container/MenuMargin/Menu" node_paths=PackedStringArray("popup")]
+visible = false
 layout_mode = 2
 text = "Credits"
 script = ExtResource("3_pto1d")
@@ -62,7 +62,7 @@ popup = NodePath("../../../../../CreditsWindow")
 
 [node name="Quit" type="Button" parent="Menu/Container/MenuMargin/Menu"]
 layout_mode = 2
-text = "Quit"
+text = "QUIT"
 script = ExtResource("4_kgmp6")
 
 [node name="OptionsWindow" parent="." instance=ExtResource("2_eahdg")]

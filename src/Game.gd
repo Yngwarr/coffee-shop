@@ -27,18 +27,24 @@ enum Direction { Left = -1, Right = 1 }
 @export var cooldown: Timer
 @export var table: Table
 @export var healthbar: Healthbar
+@export var game_over_screen: CanvasLayer
+@export var final_score_label: Label
 
 var machines: Array[Machine]
 var glasses: Array[Glass]
 var score: int = 0
 var is_on_cooldown := false
 var capacity := 100
+# var capacity := 10
+var game_is_over := false
 
 @onready var action_queue := ActionQueue.new()
 
 func _ready() -> void:
-	# pause_menu.modal_open.connect(pause_ctl.drop_next)
-	# pause_menu.resume_pressed.connect(pause_ctl.unpause)
+	pause_menu.modal_open.connect(pause_ctl.drop_next)
+	pause_menu.resume_pressed.connect(pause_ctl.unpause)
+	capacity_label.text = "%d" % capacity
+
 	RenderingServer.set_default_clear_color(Color("#c7f0d8"))
 	cooldown.timeout.connect(end_cooldown)
 	cooldown.wait_time = MoveTime
@@ -54,6 +60,9 @@ func _ready() -> void:
 	score_label.text = '%d' % score
 
 func _process(_delta: float) -> void:
+	if game_is_over:
+		return
+
 	if Input.is_action_just_pressed("game_fill_0"):
 		action_queue.fill_glass(0)
 	if Input.is_action_just_pressed("game_fill_1"):
@@ -84,6 +93,11 @@ func perform_action(action: Variant) -> void:
 			var success := move_glasses(action.direction)
 			if success:
 				add_capacity(-1)
+
+				if capacity <= 0:
+					game_over()
+					return
+
 				start_cooldown(MoveTime)
 
 func can_move_left() -> bool:
@@ -182,3 +196,8 @@ func end_cooldown() -> void:
 func add_capacity(value: int) -> void:
 	capacity += value
 	capacity_label.text = "%d" % capacity
+
+func game_over() -> void:
+	game_is_over = true
+	final_score_label.text = "SCORE: %d" % score
+	game_over_screen.show()

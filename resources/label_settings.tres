@@ -1,9 +1,0 @@
-[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://bmbl3aymfkidt"]
-
-[ext_resource type="FontFile" uid="uid://cv4egwvp53jdu" path="res://img/gizmo_light.png" id="1_lgbns"]
-
-[resource]
-line_spacing = 1.0
-font = ExtResource("1_lgbns")
-font_size = 5
-font_color = Color(0.780392, 0.941176, 0.847059, 1)

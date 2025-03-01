@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/gizmo_light.png-d340100985b7dcde205973d617712
 [params]
 
 character_ranges=PackedStringArray("0x20-0x5a")
-kerning_pairs=PackedStringArray()
+kerning_pairs=PackedStringArray("AOEUSRT OTNVM 1", "EC H: -1")
 columns=59
 rows=1
 image_margin=Rect2i(0, 0, 0, 0)

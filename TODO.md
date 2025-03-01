@@ -1,22 +1,15 @@
 # TODO
 
-## Friday
-
-- Response for number presses.
-- Add more types of cups.
-
-- Add animation for machines on number presses.
-- Add a pouring stream for machines.
-
 ## Saturday
 
+- Transition to game over (gradient down, spawns)
 - Game over sequence.
-- Game over screen.
-- Main menu.
-- Pause menu.
+
+- Response for number presses.
+- Add a pouring stream for machines.
+- Add more types of cups.
 
 ## Sunday
 
 - Tutorial!
-- Replace pause menu with something more appropriate (or remove it).
 - Replace screens with whatever Veronika comes up with.
