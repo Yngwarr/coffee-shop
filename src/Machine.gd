@@ -7,6 +7,7 @@ extends Sprite2D
 @export_group("Internal")
 @export var drink: Drink
 @export var fill_point: Node2D
+@export var anim: AnimationPlayer
 
 var fill_point_position: Vector2
 var glass_under: Glass
@@ -41,7 +42,8 @@ func is_empty() -> bool:
 
 func fill(time: float) -> void:
 	if glass_under == null:
-		# TODO visualize the miss
+		anim.play(&"pour")
 		return
 
-	glass_under.add(drink_type, time)
+	if glass_under.add(drink_type, time):
+		anim.play(&"pour")
