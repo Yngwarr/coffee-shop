@@ -3,11 +3,8 @@
 [ext_resource type="FontFile" uid="uid://cv4egwvp53jdu" path="res://img/gizmo_light.png" id="1_68mrb"]
 [ext_resource type="StyleBox" uid="uid://ov0yae1b1k2u" path="res://theme/button_focus_box.tres" id="2_au5gs"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kuw6y"]
-content_margin_left = 1.0
-content_margin_top = 1.0
-content_margin_right = 1.0
-content_margin_bottom = 1.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1p7y7"]
+bg_color = Color(0.780392, 0.941176, 0.847059, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lfryv"]
 bg_color = Color(0.262745, 0.321569, 0.239216, 1)
@@ -23,7 +20,7 @@ Button/font_sizes/font_size = 5
 Button/fonts/font = ExtResource("1_68mrb")
 Button/styles/focus = ExtResource("2_au5gs")
 Button/styles/hover = ExtResource("2_au5gs")
-Button/styles/normal = SubResource("StyleBoxEmpty_kuw6y")
+Button/styles/normal = SubResource("StyleBoxFlat_1p7y7")
 Button/styles/pressed = SubResource("StyleBoxFlat_lfryv")
 Label/colors/font_color = Color(0.262745, 0.321569, 0.239216, 1)
 Label/font_sizes/font_size = 5
