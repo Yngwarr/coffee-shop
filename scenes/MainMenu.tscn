@@ -1,7 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://cbplqxkaqi83r"]
+[gd_scene load_steps=15 format=3 uid="uid://cbplqxkaqi83r"]
 
 [ext_resource type="Script" path="res://src/UI/MainMenu.gd" id="1_62wd7"]
-[ext_resource type="Script" path="res://src/UI/ChangeSceneButton.gd" id="2_5fb6k"]
 [ext_resource type="Theme" uid="uid://kg42ikejce6b" path="res://theme.tres" id="2_c1028"]
 [ext_resource type="PackedScene" uid="uid://dp02anwflcyv8" path="res://scenes/OptionsWindow.tscn" id="2_eahdg"]
 [ext_resource type="Texture2D" uid="uid://3tcui236be7q" path="res://img/menu/coffee_bg.png" id="3_3n4m2"]
@@ -9,10 +8,90 @@
 [ext_resource type="Texture2D" uid="uid://v3iecfod0gf1" path="res://img/menu/gradient.png" id="4_db6x4"]
 [ext_resource type="Script" path="res://src/UI/QuitButton.gd" id="4_kgmp6"]
 [ext_resource type="Texture2D" uid="uid://c5xi7nddka5rp" path="res://img/menu/steamt.png" id="5_f0mut"]
+[ext_resource type="Script" path="res://src/UI/StartAnimationButton.gd" id="6_kmlk5"]
+[ext_resource type="PackedScene" uid="uid://dxkox7w8u2axu" path="res://scenes/Table.tscn" id="8_c2idm"]
+[ext_resource type="PackedScene" uid="uid://jlgojgh2ohb1" path="res://scenes/Machine.tscn" id="9_0631e"]
+
+[sub_resource type="Animation" id="Animation_djd6g"]
+resource_name = "transit"
+length = 0.4
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Menu/Gradient:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(8, 24), Vector2(92, 24)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Menu/TransitionBG:size")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 48), Vector2(84, 48)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"start_game"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_i0ps6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Menu/Gradient:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(8, 24)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Menu/TransitionBG:size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 48)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pxkao"]
+_data = {
+"RESET": SubResource("Animation_i0ps6"),
+"transit": SubResource("Animation_djd6g")
+}
 
 [node name="MainMenu" type="Node2D" node_paths=PackedStringArray("first_to_focus")]
 script = ExtResource("1_62wd7")
 first_to_focus = NodePath("Menu/Container/MenuMargin/Menu/Start")
+game_scene_name = "res://scenes/Game.tscn"
 
 [node name="Menu" type="CanvasLayer" parent="."]
 
@@ -30,13 +109,10 @@ theme = ExtResource("2_c1028")
 position = Vector2(42, 24)
 texture = ExtResource("3_3n4m2")
 
-[node name="Gradient" type="Sprite2D" parent="Menu/Container/Node2D"]
-position = Vector2(8, 24)
-texture = ExtResource("4_db6x4")
-
 [node name="Steamt" type="Sprite2D" parent="Menu/Container/Node2D"]
-position = Vector2(70, 10)
+position = Vector2(58, 0)
 texture = ExtResource("5_f0mut")
+centered = false
 
 [node name="MenuMargin" type="MarginContainer" parent="Menu/Container"]
 layout_mode = 2
@@ -49,11 +125,12 @@ theme_override_constants/margin_bottom = 2
 layout_mode = 2
 theme_override_constants/separation = 1
 
-[node name="Start" type="Button" parent="Menu/Container/MenuMargin/Menu"]
+[node name="Start" type="Button" parent="Menu/Container/MenuMargin/Menu" node_paths=PackedStringArray("anim")]
 layout_mode = 2
 text = "START"
-script = ExtResource("2_5fb6k")
-next_scene_name = "res://scenes/Game.tscn"
+script = ExtResource("6_kmlk5")
+anim = NodePath("../../../../../AnimationPlayer")
+animation_name = &"transit"
 
 [node name="Options" type="Button" parent="Menu/Container/MenuMargin/Menu" node_paths=PackedStringArray("popup")]
 visible = false
@@ -73,6 +150,42 @@ popup = NodePath("../../../../../CreditsWindow")
 layout_mode = 2
 text = "QUIT"
 script = ExtResource("4_kgmp6")
+
+[node name="TransitionBG" type="ColorRect" parent="Menu"]
+clip_contents = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -84.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.780392, 0.941176, 0.847059, 1)
+
+[node name="Table" parent="Menu/TransitionBG" instance=ExtResource("8_c2idm")]
+
+[node name="Machine" parent="Menu/TransitionBG/Table" instance=ExtResource("9_0631e")]
+position = Vector2(3, 11)
+
+[node name="Machine2" parent="Menu/TransitionBG/Table" instance=ExtResource("9_0631e")]
+position = Vector2(15, 11)
+drink_type = 1
+
+[node name="Machine3" parent="Menu/TransitionBG/Table" instance=ExtResource("9_0631e")]
+position = Vector2(27, 11)
+drink_type = 2
+
+[node name="Machine4" parent="Menu/TransitionBG/Table" instance=ExtResource("9_0631e")]
+position = Vector2(39, 11)
+drink_type = 3
+
+[node name="Gradient" type="Sprite2D" parent="Menu"]
+position = Vector2(8, 24)
+texture = ExtResource("4_db6x4")
+
+[node name="Gradient2" type="Sprite2D" parent="Menu/Gradient"]
+position = Vector2(-16, 0)
+scale = Vector2(-1, 1)
+texture = ExtResource("4_db6x4")
 
 [node name="OptionsWindow" parent="." instance=ExtResource("2_eahdg")]
 visible = false
@@ -107,3 +220,8 @@ Special thanks to all my homies!"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_pxkao")
+}

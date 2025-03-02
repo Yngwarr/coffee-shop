@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://dxkox7w8u2axu"]
+[gd_scene load_steps=7 format=3 uid="uid://dxkox7w8u2axu"]
 
 [ext_resource type="Texture2D" uid="uid://qxt2q22xv60a" path="res://img/table.png" id="1_7nn3o"]
 [ext_resource type="Script" path="res://src/Table.gd" id="2_2n6yv"]
 [ext_resource type="Shader" path="res://shaders/scrolling.gdshader" id="2_6f1hg"]
 [ext_resource type="Texture2D" uid="uid://d1j2ttxxclhp6" path="res://img/conveyor.png" id="2_eehjp"]
+[ext_resource type="PackedScene" uid="uid://c7mkokulq1oe0" path="res://scenes/NumberLabel.tscn" id="5_hiuk4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nkp76"]
 shader = ExtResource("2_6f1hg")
@@ -22,3 +23,20 @@ offset_right = 52.0
 offset_bottom = 37.0
 texture = ExtResource("2_eehjp")
 stretch_mode = 1
+
+[node name="Numbers" type="Node2D" parent="."]
+position = Vector2(41, 1)
+
+[node name="No1" parent="Numbers" instance=ExtResource("5_hiuk4")]
+position = Vector2(-36, 0)
+
+[node name="No2" parent="Numbers" instance=ExtResource("5_hiuk4")]
+position = Vector2(-24, 0)
+number = 2
+
+[node name="No3" parent="Numbers" instance=ExtResource("5_hiuk4")]
+position = Vector2(-12, 0)
+number = 3
+
+[node name="No4" parent="Numbers" instance=ExtResource("5_hiuk4")]
+number = 4

@@ -5,8 +5,13 @@ extends Node2D
 ## The node that will grab focus on ready. Usually, the top button on the
 ## screen.
 @export var first_to_focus: Control
+@export_file("*.tscn") var game_scene_name: String
 
 func _ready() -> void:
 	ConfigCtl.load_config()
 	first_to_focus.grab_focus()
 	RenderingServer.set_default_clear_color(Color("#c7f0d8"))
+
+func start_game() -> void:
+	get_tree().paused = false
+	get_tree().change_scene_to_file(game_scene_name)

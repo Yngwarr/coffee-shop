@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://csahdmph2aji4"]
+[gd_scene load_steps=16 format=3 uid="uid://csahdmph2aji4"]
 
 [ext_resource type="Script" path="res://src/Game.gd" id="1_wmfvw"]
 [ext_resource type="Script" path="res://src/UI/PauseMenu.gd" id="2_xdcds"]
@@ -12,7 +12,6 @@
 [ext_resource type="PackedScene" uid="uid://ci2bn7mtm836t" path="res://scenes/Glass.tscn" id="10_rmdom"]
 [ext_resource type="PackedScene" uid="uid://dxkox7w8u2axu" path="res://scenes/Table.tscn" id="10_v2xrc"]
 [ext_resource type="PackedScene" uid="uid://jlgojgh2ohb1" path="res://scenes/Machine.tscn" id="11_psbjo"]
-[ext_resource type="PackedScene" uid="uid://c7mkokulq1oe0" path="res://scenes/NumberLabel.tscn" id="12_y0xnc"]
 [ext_resource type="PackedScene" uid="uid://bpgbs001xd6x7" path="res://scenes/Healthbar.tscn" id="13_lwvai"]
 [ext_resource type="PackedScene" uid="uid://ddvwo73klrssa" path="res://scenes/OrdersPanel.tscn" id="14_s81w8"]
 [ext_resource type="LabelSettings" uid="uid://bmbl3aymfkidt" path="res://resources/label_bright.tres" id="15_l0e73"]
@@ -202,23 +201,6 @@ position = Vector2(36, 1)
 drink_type = 3
 
 [node name="Glasses" type="Node2D" parent="."]
-
-[node name="Numbers" type="Node2D" parent="."]
-position = Vector2(41, 1)
-
-[node name="No1" parent="Numbers" instance=ExtResource("12_y0xnc")]
-position = Vector2(-36, 0)
-
-[node name="No2" parent="Numbers" instance=ExtResource("12_y0xnc")]
-position = Vector2(-24, 0)
-number = 2
-
-[node name="No3" parent="Numbers" instance=ExtResource("12_y0xnc")]
-position = Vector2(-12, 0)
-number = 3
-
-[node name="No4" parent="Numbers" instance=ExtResource("12_y0xnc")]
-number = 4
 
 [node name="Healthbar" parent="." instance=ExtResource("13_lwvai")]
 visible = false
