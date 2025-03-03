@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://csahdmph2aji4"]
+[gd_scene load_steps=25 format=3 uid="uid://csahdmph2aji4"]
 
 [ext_resource type="Script" path="res://src/Game.gd" id="1_wmfvw"]
 [ext_resource type="Script" path="res://src/UI/PauseMenu.gd" id="2_xdcds"]
@@ -18,11 +18,51 @@
 [ext_resource type="PackedScene" uid="uid://bpgbs001xd6x7" path="res://scenes/Healthbar.tscn" id="13_lwvai"]
 [ext_resource type="PackedScene" uid="uid://ddvwo73klrssa" path="res://scenes/OrdersPanel.tscn" id="14_s81w8"]
 [ext_resource type="LabelSettings" uid="uid://bmbl3aymfkidt" path="res://resources/label_bright.tres" id="15_l0e73"]
+[ext_resource type="Texture2D" uid="uid://djvrm8wf21rbm" path="res://img/final/nowin.png" id="17_n85hf"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_c87ux"]
 line_spacing = 2.0
 font_size = 5
 font_color = Color(0.780392, 0.941176, 0.847059, 1)
+
+[sub_resource type="Animation" id="Animation_o40i5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GameOverScreen/GradientDark:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-8, 24)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GameOverScreen/Background:size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 48)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GameOverScreen/Background/HBoxContainer:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(13, 37)]
+}
 
 [sub_resource type="Animation" id="Animation_mpeoe"]
 resource_name = "game_over"
@@ -78,45 +118,6 @@ tracks/3/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_o40i5"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("GameOverScreen/GradientDark:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-8, 24)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("GameOverScreen/Background:size")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 48)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("GameOverScreen/Background/HBoxContainer:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(13, 37)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3xx76"]
 _data = {
 "RESET": SubResource("Animation_o40i5"),
@@ -128,7 +129,7 @@ line_spacing = 2.0
 font_size = 5
 font_color = Color(0.780392, 0.941176, 0.847059, 1)
 
-[node name="Game" type="Node2D" node_paths=PackedStringArray("pause_ctl", "pause_menu", "machines_container", "glasses_container", "score_label", "capacity_label", "orders_panel", "bin_point", "glass_spawn_point", "cooldown", "table", "healthbar", "game_over_screen", "final_score_label", "anim")]
+[node name="Game" type="Node2D" node_paths=PackedStringArray("pause_ctl", "pause_menu", "machines_container", "glasses_container", "score_label", "capacity_label", "orders_panel", "bin_point", "glass_spawn_point", "cooldown", "table", "healthbar", "game_over_screen", "final_score_label", "anim", "good_end", "bad_end")]
 script = ExtResource("1_wmfvw")
 pause_ctl = NodePath("Pause")
 pause_menu = NodePath("PauseMenu")
@@ -146,6 +147,8 @@ healthbar = NodePath("Healthbar")
 game_over_screen = NodePath("GameOverScreen")
 final_score_label = NodePath("GameOverScreen/Background/Score")
 anim = NodePath("AnimationPlayer")
+good_end = NodePath("GameOverScreen/Background/GoodCup")
+bad_end = NodePath("GameOverScreen/Background/BadCup")
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
@@ -328,13 +331,20 @@ text = "123123"
 label_settings = SubResource("LabelSettings_dt7wa")
 horizontal_alignment = 2
 
-[node name="Finishcup" type="Sprite2D" parent="GameOverScreen/Background"]
+[node name="GoodCup" type="Node2D" parent="GameOverScreen/Background"]
+
+[node name="Finishcup" type="Sprite2D" parent="GameOverScreen/Background/GoodCup"]
 position = Vector2(64, 19)
 texture = ExtResource("9_qraoj")
 
-[node name="Finishcupsteam" type="Sprite2D" parent="GameOverScreen/Background"]
+[node name="Finishcupsteam" type="Sprite2D" parent="GameOverScreen/Background/GoodCup"]
 position = Vector2(63, 6)
 texture = ExtResource("10_jo0u1")
+
+[node name="BadCup" type="Sprite2D" parent="GameOverScreen/Background"]
+visible = false
+position = Vector2(54, 23)
+texture = ExtResource("17_n85hf")
 
 [node name="Losetitle" type="Sprite2D" parent="GameOverScreen/Background"]
 position = Vector2(25, 6)

@@ -30,6 +30,8 @@ enum Direction { Left = -1, Right = 1 }
 @export var game_over_screen: CanvasLayer
 @export var final_score_label: Label
 @export var anim: AnimationPlayer
+@export var good_end: Node2D
+@export var bad_end: Node2D
 
 var machines: Array[Machine]
 var glasses: Array[Glass]
@@ -201,8 +203,12 @@ func add_capacity(value: int) -> void:
 	capacity_label.text = "%d" % capacity
 
 func game_over() -> void:
+	var is_good := score >= 100
+
 	game_is_over = true
 	final_score_label.text = str(score)
 	game_over_screen.show()
+	good_end.visible = is_good
+	bad_end.visible = not is_good
 	anim.play(&"game_over")
 	GlobalSoundCtrl.play_effect(SoundCtrl.Effect.Over)
