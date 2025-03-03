@@ -29,6 +29,7 @@ enum Direction { Left = -1, Right = 1 }
 @export var healthbar: Healthbar
 @export var game_over_screen: CanvasLayer
 @export var final_score_label: Label
+@export var anim: AnimationPlayer
 
 var machines: Array[Machine]
 var glasses: Array[Glass]
@@ -57,7 +58,7 @@ func _ready() -> void:
 
 	spawn_glass()
 
-	score_label.text = '%d' % score
+	score_label.text = str(score)
 
 func _process(_delta: float) -> void:
 	if game_is_over:
@@ -115,6 +116,7 @@ func move_glasses(direction: Direction) -> bool:
 	for m in machines:
 		m.empty()
 
+	GlobalSoundCtrl.play_effect(SoundCtrl.Effect.Roll if direction == Direction.Right else SoundCtrl.Effect.Roll)
 	table.conv_start(direction)
 
 	for glass in glasses:
@@ -172,6 +174,7 @@ func fill_glass(idx: int) -> void:
 		printerr("Glass index must be in range of len(machines)")
 
 	machines[idx].fill(PourTime)
+	GlobalSoundCtrl.play_machine(idx)
 
 func spawn_glass() -> void:
 	var new_glass: Glass = glass_prefab.instantiate()
@@ -199,5 +202,7 @@ func add_capacity(value: int) -> void:
 
 func game_over() -> void:
 	game_is_over = true
-	final_score_label.text = "SCORE: %d" % score
+	final_score_label.text = str(score)
 	game_over_screen.show()
+	anim.play(&"game_over")
+	GlobalSoundCtrl.play_effect(SoundCtrl.Effect.Over)

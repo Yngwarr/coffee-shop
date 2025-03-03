@@ -11,7 +11,11 @@ func _ready() -> void:
 	ConfigCtl.load_config()
 	first_to_focus.grab_focus()
 	RenderingServer.set_default_clear_color(Color("#c7f0d8"))
+	GlobalSoundCtrl.play_effect(SoundCtrl.Effect.Menu)
 
 func start_game() -> void:
 	get_tree().paused = false
 	get_tree().change_scene_to_file(game_scene_name)
+
+func play_start_effect() -> void:
+	GlobalSoundCtrl.play_effect(SoundCtrl.Effect.Start)

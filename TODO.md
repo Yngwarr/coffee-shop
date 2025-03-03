@@ -1,15 +1,11 @@
 # TODO
 
-## Saturday
+## Needed
 
-- Transition to game over (gradient down, spawns)
-- Game over sequence.
+- Sounds and music
+- Game over when < 100
 
-- Response for number presses.
-- Add a pouring stream for machines.
+## Nice to have
+
 - Add more types of cups.
-
-## Sunday
-
 - Tutorial!
-- Replace screens with whatever Veronika comes up with.
